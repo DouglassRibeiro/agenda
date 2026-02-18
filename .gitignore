@@ -1,0 +1,9 @@
+.venv
+venv
+env
+.env
+node_modules/
+db.sqlite3
+__pycache__/
+
+!htmx.min.js
