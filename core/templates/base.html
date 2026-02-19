@@ -3,10 +3,9 @@
 <html lang="pt-br">
 <head>
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <script src="{% static 'core/js/htmx.min.js' %}"></script>
 </head>
 <body>
-    <h1 class="text-3xl font-bold text-blue-600 bg-black ">
-        Testando Tailwind!
-    </h1>
+    {% block content %}{% endblock content %}
 </body>
 </html>
