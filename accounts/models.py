@@ -1,68 +1,45 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, Group
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
-
-
-class CustomUserManager(BaseUserManager):
+class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
-            raise ValueError('O usuário precisa de um email válido')
-        tipo = extra_fields.pop('tipo_perfil', None)
+            raise ValueError('O usuário deve ter um endereço de email')
+        
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
-        
-        if tipo:
-            grupo = Group.objects.filter(name=tipo).first()
-            if grupo:
-                user.groups.add(grupo)
         return user
     
-    def create_superuser(self, email, password=None, **extra_fields):
+    def create_superuser(self, email, password=False, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
+        
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser deve ter is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser dever ter is_superuser=True.')
 
         return self.create_user(email, password, **extra_fields)
-    
-class User(AbstractBaseUser, PermissionsMixin):
-    
-    TIPOS_USUARIO = (
-        ('paciente', 'Paciente'),
-        ('profissional', 'Profissional'),
-        ('administraca', 'Recepcionista'),
-    )
-    
-    email = models.EmailField(unique=True)
-    nome_completo = models.CharField(max_length=255)
-    telefone = models.CharField(max_length=20, blank=True, null=True)
 
-    tipo = models.CharField(max_length=20, choices=TIPOS_USUARIO, default='paciente')
-    
+class MyUser(AbstractBaseUser, PermissionsMixin):
+    JOB_TYPES = (
+        ('admin', 'Admistrador'),
+        ('sub', 'Sub Adminstrador'),
+        ('user', 'Usuário'),
+    )
+
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=150, blank=True)
+    last_name = models.CharField(max_length=150, blank=True)
+
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    objects = CustomUserManager()
+    objects = MyUserManager()
 
-    USERNAME_FIELD = 'email' 
-    REQUIRED_FIELDS = ['nome_completo']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
-    def __str__(self):
-        return self.email
-    pass
-
-class Paciente(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    data_nascimento = models.DateField(null=True, blank=True)
-    cpf = models.CharField(max_length=14)
-
-    def __str__(self):
-        return f"Paciente: {self.user.nome_completo}"
-
-class Profissional(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    registro_conselho = models.CharField(max_length=30)
-    especialidade = models.CharField(max_length=100)
-
-    def __str__(self):
-        return f"Profissional: {self.user.nome_completo}"
+    role = models.CharField(max_length=20, choices=JOB_TYPES, default='user',)

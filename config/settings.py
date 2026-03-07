@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'core',
     'accounts',
+    'calendars'
 ]
 
 MIDDLEWARE = [
@@ -114,4 +115,4 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
     ]   
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.MyUser'

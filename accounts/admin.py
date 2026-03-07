@@ -1,7 +1,30 @@
 from django.contrib import admin
-from .models import User, Paciente, Profissional # 1. Importe os modelos
+from django.contrib.auth.admin import UserAdmin
+from .models import MyUser
+from .forms import MyUserCreationForm, MyUserChangeForm
 
-# 2. Registre cada um deles
-admin.site.register(User)
-admin.site.register(Paciente)
-admin.site.register(Profissional)
+class MyUserAdmin(UserAdmin):
+    add_form = MyUserCreationForm
+    form = MyUserChangeForm
+
+    model = MyUser
+    list_display = ('email', 'is_staff', 'is_active')
+    list_filter = ('is_staff', 'is_active')
+    search_fields = ('email',)
+    ordering = ('email',)
+
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Informações Pessoais', {'fields': ('first_name', 'last_name')}),
+        ('Permissões', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Datas importantes', {'fields': ('last_login',)}),
+        ('Cargo e Funções', {'fields': ('role',)}),
+    )
+
+    add_fieldsets = (
+        (None, {
+        'classes' : ('wide',),
+        'fields': ('email', 'password', 'confirm_password')}),
+    )
+
+admin.site.register(MyUser, MyUserAdmin)
