@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group
 
 class MyUserManager(BaseUserManager):
+    
         
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -32,6 +33,10 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     )
     
     def save(self, *args, **kwargs):
+        
+        if self.is_superuser:
+            self.role = 'admin'
+            
         if self.role == 'admin':
             self.is_staff = True
             self.is_superuser = True
@@ -39,10 +44,20 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
             self.is_staff = True
             self.is_superuser = False
         else:
-            self.is_staff = False
-            self.is_superuser = False
-            
+            if not self.is_superuser:
+                self.is_staff = False
+                self.is_superuser = False
+                
         super().save(*args, **kwargs)
+
+        if self.role == 'admin':
+            grupo, _ = Group.objects.get_or_create(name='Administradores')
+            self.groups.add(grupo)
+        elif self.role == 'sub':
+            grupo, _ = Group.objects.get_or_create(name='Sub-Admins')
+            self.groups.add(grupo)
+        else:
+            self.groups.clear()
 
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=150, blank=True)

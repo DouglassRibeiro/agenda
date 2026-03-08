@@ -10,4 +10,4 @@ class MyUserCreationForm(UserCreationForm):
 class MyUserChangeForm(UserChangeForm):
     class Meta:
         model = MyUser
-        fields = ('email', 'is_active', 'is_staff', 'is_superuser')
+        fields = ('email', 'role', 'is_active', 'is_staff', 'is_superuser')
