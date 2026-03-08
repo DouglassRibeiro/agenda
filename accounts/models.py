@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 class MyUserManager(BaseUserManager):
+        
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError('O usuário deve ter um endereço de email')
@@ -29,6 +30,19 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         ('sub', 'Sub Adminstrador'),
         ('user', 'Usuário'),
     )
+    
+    def save(self, *args, **kwargs):
+        if self.role == 'admin':
+            self.is_staff = True
+            self.is_superuser = True
+        elif self.role == 'sub':
+            self.is_staff = True
+            self.is_superuser = False
+        else:
+            self.is_staff = False
+            self.is_superuser = False
+            
+        super().save(*args, **kwargs)
 
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=150, blank=True)

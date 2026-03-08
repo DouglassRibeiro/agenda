@@ -24,7 +24,8 @@ class MyUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
         'classes' : ('wide',),
-        'fields': ('email', 'password', 'confirm_password')}),
+        'fields': ('email', 'role', 'password1', 'password2')
+        }),
     )
 
 admin.site.register(MyUser, MyUserAdmin)
