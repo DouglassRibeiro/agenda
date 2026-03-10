@@ -27,15 +27,12 @@ class MyUserManager(BaseUserManager):
 
 class MyUser(AbstractBaseUser, PermissionsMixin):
     JOB_TYPES = (
-        ('admin', 'Admistrador'),
-        ('sub', 'Sub Adminstrador'),
+        ('admin', 'Administrador'),
+        ('sub', 'Sub Administrador'),
         ('user', 'Usuário'),
     )
     
     def save(self, *args, **kwargs):
-        
-        if self.is_superuser:
-            self.role = 'admin'
             
         if self.role == 'admin':
             self.is_staff = True
@@ -49,6 +46,8 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
                 self.is_superuser = False
                 
         super().save(*args, **kwargs)
+        
+        self.groups.clear()
 
         if self.role == 'admin':
             grupo, _ = Group.objects.get_or_create(name='Administradores')
@@ -57,7 +56,8 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
             grupo, _ = Group.objects.get_or_create(name='Sub-Admins')
             self.groups.add(grupo)
         else:
-            self.groups.clear()
+            grupo, _ = Group.objects.get_or_create(name='Users')
+            self.groups.add(grupo)
 
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=150, blank=True)
