@@ -548,8 +548,12 @@ video {
   position: static;
 }
 
-.m-6 {
-  margin: 1.5rem;
+.ml-20 {
+  margin-left: 5rem;
+}
+
+.mr-20 {
+  margin-right: 5rem;
 }
 
 .block {
@@ -564,8 +568,16 @@ video {
   display: grid;
 }
 
+.h-16 {
+  height: 4rem;
+}
+
 .h-screen {
   height: 100vh;
+}
+
+.w-64 {
+  width: 16rem;
 }
 
 .items-center {
@@ -574,6 +586,31 @@ video {
 
 .justify-center {
   justify-content: center;
+}
+
+.rounded-3xl {
+  border-radius: 1.5rem;
+}
+
+.border {
+  border-width: 1px;
+}
+
+.border-8 {
+  border-width: 8px;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.border-b {
+  border-bottom-width: 1px;
+}
+
+.border-white {
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 
 .bg-black {
@@ -586,15 +623,57 @@ video {
   background-color: rgb(220 38 38 / var(--tw-bg-opacity));
 }
 
+.bg-slate-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
+}
+
+.bg-\[image\:var\(--bg-image\)\] {
+  background-image: var(--bg-image);
+}
+
+.bg-cover {
+  background-size: cover;
+}
+
+.bg-center {
+  background-position: center;
+}
+
+.bg-no-repeat {
+  background-repeat: no-repeat;
+}
+
 .p-4 {
   padding: 1rem;
 }
 
-.text-center {
-  text-align: center;
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.font-bold {
+  font-weight: 700;
 }
 
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+@media (min-width: 1024px) {
+  .lg\:items-center {
+    align-items: center;
+  }
 }

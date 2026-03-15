@@ -2,12 +2,15 @@
 
 {% load static %}
 
+
 {% block content %}
-<section class="flex h-screen items-center justify-center text-center">
-    <div>
-        <a href="{% url 'accounts:login' %}">Login</a>
-        <div class="m-6">or</div>
-        <a href="{% url 'accounts:register' %}">Register</a>
+<section class="flex h-screen bg-cover bg-center bg-no-repeat items-center justify-center bg-[image:var(--bg-image)]" style="--bg-image: url('{% static 'img/beachfrontStreet.png' %}')">
+    <div class="flex lg:items-center"> 
+        <a href="{% url 'accounts:login' %}">
+            <div class=" h-16 w-64 bg-slate-400 flex justify-center items-center rounded-3xl mr-20 text-white border-white border-2 font-bold text-2xl">Login</div>
+        </a>
+        <a href="{% url 'accounts:register' %}">
+            <div class=" h-16 w-64 bg-slate-400 flex justify-center items-center rounded-3xl ml-20 text-white border-white border-2 font-bold text-2xl">Register</div></a>
     </div>
 </section>
 {% endblock content %}

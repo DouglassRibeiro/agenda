@@ -116,3 +116,10 @@ STATICFILES_DIRS = [
 ]
 
 AUTH_USER_MODEL = 'accounts.MyUser'
+
+LOGIN_REDIRECT_URL = 'core:index'
+LOGOUT_REDIRECT_URL = 'accounts:login'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://sequently-curvilinear-melida.ngrok-free.dev',
+]
