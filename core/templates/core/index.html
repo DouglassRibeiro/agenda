@@ -1,16 +1,27 @@
 {% extends "base.html" %}
-
 {% load static %}
-
 
 {% block content %}
 <section class="flex h-screen bg-cover bg-center bg-no-repeat items-center justify-center bg-[image:var(--bg-image)]" style="--bg-image: url('{% static 'img/beachfrontStreet.png' %}')">
-    <div class="flex lg:items-center"> 
-        <a href="{% url 'accounts:login' %}">
-            <div class=" h-16 w-64 bg-slate-400 flex justify-center items-center rounded-3xl mr-20 text-white border-white border-2 font-bold text-2xl">Login</div>
+    <div class="lg:flex lg:gap-[16vw] grid gap-[16vh]">
+        
+        <a href="{% url 'accounts:login' %}" 
+           class="flex justify-center items-center rounded-3xl text-white border-white border-2 font-bold transition-transform active:scale-95
+                  w-[clamp(200px,15vw,400px)] 
+                  h-[clamp(50px,8vh,100px)] 
+                  text-[clamp(1.2rem,1.5vw,2rem)] 
+                  bg-slate-400/80 backdrop-blur-sm">
+           Login
         </a>
-        <a href="{% url 'accounts:register' %}">
-            <div class=" h-16 w-64 bg-slate-400 flex justify-center items-center rounded-3xl ml-20 text-white border-white border-2 font-bold text-2xl">Register</div></a>
+
+        <a href="{% url 'accounts:register' %}" 
+           class="flex justify-center items-center rounded-3xl text-white border-white border-2 font-bold transition-transform active:scale-95
+                  w-[clamp(200px,15vw,400px)] 
+                  h-[clamp(50px,8vh,100px)] 
+                  text-[clamp(1.2rem,1.5vw,2rem)] 
+                  bg-slate-400/80 backdrop-blur-sm">
+           Register
+        </a>
     </div>
 </section>
 {% endblock content %}
