@@ -4,7 +4,7 @@
 {% block content %}
 <section class="relative flex w-full h-screen items-center justify-center overflow-hidden bg-gray-900">
     <div class="absolute inset-0 z-0 blur-sm brightness-75">
-        <img src="{% static 'img/beachfrontStreet.png' %}" alt="" class="w-full h-full object-cover" fetchpriority="high" decoding="async">
+        <img id="backgroud-slider" src="{% static 'core/img/beachfrontStreet.webp' %}" alt="" class="w-full h-full object-cover" fetchpriority="high" decoding="async">
     </div>
     <div class="relative z-10 lg:flex lg:gap-[16vw] grid gap-[16vh]">
         
@@ -15,4 +15,5 @@
            class="flex justify-center items-center rounded-3xl text-white border-white border-2 font-bold transition-transform active:scale-95 w-[clamp(200px,15vw,400px)] h-[clamp(50px,8vh,100px)] text-[clamp(1.2rem,1.5vw,2rem)] duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">Register</a>
     </div>
 </section>
+<script src="{% static 'core/js/loadImage.js' %}"></script>    
 {% endblock content %}
